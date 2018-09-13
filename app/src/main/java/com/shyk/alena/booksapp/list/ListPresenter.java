@@ -1,13 +1,14 @@
 package com.shyk.alena.booksapp.list;
 
+import android.content.Context;
 import android.view.Menu;
-import android.view.MenuInflater;
 
+import com.shyk.alena.booksapp.data.LocalDataProvider;
+import com.shyk.alena.booksapp.data.RemoteDataProvider;
 import com.shyk.alena.booksapp.models.BooksVolume;
-import com.shyk.alena.booksapp.retrofit.GoogleBooksRestClient;
+import com.shyk.alena.booksapp.models.VolumeInfo;
 import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.shyk.alena.booksapp.utils.Constants.MAX_RESULT;
@@ -19,10 +20,20 @@ public class ListPresenter implements ListContract.Presenter {
     private boolean isLastPage = false;
     private int startIndex = PAGE_START;
     private RetrofitListener retrofitListener;
+    private RemoteDataProvider remoteDataProvider = new RemoteDataProvider();
+    private LocalDataProvider localDataProvider;
+    private Context context;
 
-    public ListPresenter(ListContract.View view, RetrofitListener retrofitListener) {
+
+    public ListPresenter(Context context, ListContract.View view, RetrofitListener retrofitListener) {
+        this.context = context;
         this.view = view;
         this.retrofitListener = retrofitListener;
+
+    }
+
+    public void create() {
+        localDataProvider = new LocalDataProvider(context);
         this.view.initList();
     }
 
@@ -39,25 +50,29 @@ public class ListPresenter implements ListContract.Presenter {
     public void loadFirstPage(String searchKeyword) {
         this.searchKeyword = searchKeyword;
         view.clearAdapter();
-        GoogleBooksRestClient.getInstance().getBookList(searchKeyword, retrofitListener, "0", String.valueOf(MAX_RESULT));
+        remoteDataProvider.loadList(searchKeyword, retrofitListener, "0");
     }
 
     public void loadNextPage() {
         startIndex += MAX_RESULT + 1;
-        GoogleBooksRestClient.getInstance().getBookList(searchKeyword, retrofitListener, String.valueOf(startIndex), String.valueOf(MAX_RESULT));
-
-
+        remoteDataProvider.loadList(searchKeyword, retrofitListener, String.valueOf(startIndex));
     }
 
     List<BooksVolume> getBooksFromDB() {
-        ArrayList<BooksVolume> list=new ArrayList();
-        return list;
+        return localDataProvider.getBooksFromDB(null);
     }
 
     @Override
     public void onNextList(List<BooksVolume> items) {
         isLastPage = items.size() < MAX_RESULT;
         view.addNextPage(items);
+    }
+
+    @Override
+    public void loadBooksFromDB() {
+        List<BooksVolume> volumes = getBooksFromDB();
+        view.clearAdapter();
+        retrofitListener.onList(volumes);
     }
 
 

@@ -30,5 +30,6 @@ public class ListContract {
 
         void onNextList(List<BooksVolume> items);
 
+        void loadBooksFromDB();
     }
 }

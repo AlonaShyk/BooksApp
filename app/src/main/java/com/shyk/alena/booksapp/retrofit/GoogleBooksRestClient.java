@@ -63,8 +63,10 @@ public class GoogleBooksRestClient {
 
     }
 
-    public void getBookList(String searchKeyWords, final RetrofitListener callback, String
-            startIndex, String maxResult) {
+    public void getBookList(String searchKeyWords,
+                            final RetrofitListener callback,
+                            String startIndex,
+                            String maxResult) {
         Call<Items> call = googleBooksService.loadBooksList(searchKeyWords, startIndex, maxResult, GoogleBooksConfig.getApiKey());
         call.enqueue(new Callback<Items>() {
             @Override

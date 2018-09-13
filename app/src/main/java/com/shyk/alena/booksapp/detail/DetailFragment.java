@@ -50,7 +50,7 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
             bookId = getArguments().getString(BOOK_ID);
         }
         presenter = new DetailPresenter(getContext(), this, this);
-        presenter.setupDB();
+        presenter.createDBAccess();
     }
 
     @Override
@@ -78,7 +78,7 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
 
     @Override
     public void onBook(BooksVolume booksVolume) {
-        presenter.showBook(booksVolume);
+        presenter.showBook(booksVolume.getVolumeInfo());
         presenter.addToDatabase(booksVolume);
 
     }

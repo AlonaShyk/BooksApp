@@ -19,11 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shyk.alena.booksapp.R;
-import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 import com.shyk.alena.booksapp.detail.DetailFragment;
 import com.shyk.alena.booksapp.list.adapter.MyBooksListRecyclerViewAdapter;
 import com.shyk.alena.booksapp.list.adapter.PaginationScrollListener;
 import com.shyk.alena.booksapp.models.BooksVolume;
+import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 
 import java.util.List;
 
@@ -56,7 +56,8 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         recyclerView = view.findViewById(R.id.recycle_view);
-        presenter = new ListPresenter(this, this);
+        presenter = new ListPresenter(getContext(), this, this);
+        presenter.create();
         presenter.loadFirstPage(KEYWORD_FOR_START);
         return view;
     }
@@ -65,12 +66,12 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.options_menu, menu);
-        presenter.setupSearch(menu, inflater);
+        presenter.setupSearch(menu);
         MenuItem historyItem = menu.findItem(R.id.action_history);
         historyItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-
+                presenter.loadBooksFromDB();
                 return false;
             }
         });

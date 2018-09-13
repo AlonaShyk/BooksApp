@@ -1,5 +1,7 @@
 package com.shyk.alena.booksapp.models;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class VolumeInfo {
@@ -10,6 +12,7 @@ public class VolumeInfo {
     private String description;
     private ImageLinks imageLinks;
     private int pageCount;
+    private String author;
 
     public VolumeInfo(String title, List<String> authors, String publisher, String publishedDate, String description, ImageLinks imageLinks, int pageCount) {
         this.title = title;
@@ -78,6 +81,10 @@ public class VolumeInfo {
 
     public void setAuthors(List<String> authors) {
         this.authors = authors;
+    }
+
+    public void setAuthor(String author) {
+        this.authors = new ArrayList<>(Collections.singleton(author));
     }
 
 }

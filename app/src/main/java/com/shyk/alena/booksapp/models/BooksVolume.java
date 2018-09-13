@@ -13,6 +13,10 @@ public class BooksVolume {
         this.volumeInfo = volumeInfo;
     }
 
+    public BooksVolume(VolumeInfo volumeInfo) {
+        this.volumeInfo = volumeInfo;
+    }
+
     public BooksVolume() {
     }
 
