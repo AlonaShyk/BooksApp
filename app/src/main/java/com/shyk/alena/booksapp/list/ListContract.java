@@ -1,7 +1,6 @@
 package com.shyk.alena.booksapp.list;
 
 import android.view.Menu;
-import android.view.MenuInflater;
 
 import com.shyk.alena.booksapp.base.BasePresenter;
 import com.shyk.alena.booksapp.base.BaseView;
@@ -16,6 +15,10 @@ public class ListContract {
     interface View extends BaseView {
         void initSearch(Menu menu);
 
+        void initHistory(Menu menu);
+
+        void initSignIn(Menu menu);
+
         void initList();
 
         void clearAdapter();
@@ -23,13 +26,21 @@ public class ListContract {
         void addNextPage(List<BooksVolume> items);
 
         void openDetail(String id);
+
+        void openSignInActivity();
     }
 
     interface Presenter extends BasePresenter<View> {
         void setupSearch(Menu menu);
 
+        void setupHistory(Menu menu);
+
+        void setupSignIn(Menu menu);
+
         void onNextList(List<BooksVolume> items);
 
         void loadBooksFromDB();
+
+        void onSignIn();
     }
 }

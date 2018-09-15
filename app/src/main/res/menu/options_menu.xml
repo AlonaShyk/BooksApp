@@ -12,4 +12,9 @@
         android:title="@string/history"
         android:icon="@drawable/ic_history"
         app:showAsAction="collapseActionView|ifRoom" />
+    <item
+        android:id="@+id/action_signin"
+        android:title="@string/signin"
+        android:icon="@drawable/ic_signin"
+        app:showAsAction="collapseActionView|ifRoom" />
 </menu>

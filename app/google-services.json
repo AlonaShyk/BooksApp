@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1049413404952",
+    "firebase_url": "https://stunning-hull-214314.firebaseio.com",
+    "project_id": "stunning-hull-214314",
+    "storage_bucket": "stunning-hull-214314.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049413404952:android:8e36a3a82cd8b371",
+        "android_client_info": {
+          "package_name": "com.shyk.alena.booksapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1049413404952-ee841m1sifcolg7fpdc3fi76ctfoseph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shyk.alena.booksapp",
+            "certificate_hash": "de5f9a0d7f3a61cea60cc22dba021b0ddd799cc0"
+          }
+        },
+        {
+          "client_id": "1049413404952-8pslou12ll840hi790uk4v34615um3nv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDnaLh4G3E0H0WGgXzCHheP8dItnVkQhg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1049413404952-8pslou12ll840hi790uk4v34615um3nv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

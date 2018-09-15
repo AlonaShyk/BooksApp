@@ -2,6 +2,7 @@ package com.shyk.alena.booksapp.list;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,7 @@ import com.shyk.alena.booksapp.list.adapter.MyBooksListRecyclerViewAdapter;
 import com.shyk.alena.booksapp.list.adapter.PaginationScrollListener;
 import com.shyk.alena.booksapp.models.BooksVolume;
 import com.shyk.alena.booksapp.retrofit.RetrofitListener;
+import com.shyk.alena.booksapp.signIn.GoogleSignInActivity;
 
 import java.util.List;
 
@@ -67,14 +69,8 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.options_menu, menu);
         presenter.setupSearch(menu);
-        MenuItem historyItem = menu.findItem(R.id.action_history);
-        historyItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                presenter.loadBooksFromDB();
-                return false;
-            }
-        });
+       presenter.setupHistory(menu);
+       presenter.setupSignIn(menu);
 
     }
 
@@ -132,6 +128,30 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     }
 
     @Override
+    public void initHistory(Menu menu) {
+        MenuItem historyItem = menu.findItem(R.id.action_history);
+        historyItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                presenter.loadBooksFromDB();
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void initSignIn(Menu menu) {
+        MenuItem signIn = menu.findItem(R.id.action_signin);
+        signIn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                presenter.onSignIn();
+                return false;
+            }
+        });
+    }
+
+    @Override
     public void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -170,14 +190,19 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
         ftb.commit();
     }
 
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(BooksVolume item);
+    @Override
+    public void openSignInActivity() {
+        Intent intent = new Intent(getActivity(), GoogleSignInActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.destroy();
+    }
+
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(BooksVolume item);
     }
 }

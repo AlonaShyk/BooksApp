@@ -6,7 +6,6 @@ import android.view.Menu;
 import com.shyk.alena.booksapp.data.LocalDataProvider;
 import com.shyk.alena.booksapp.data.RemoteDataProvider;
 import com.shyk.alena.booksapp.models.BooksVolume;
-import com.shyk.alena.booksapp.models.VolumeInfo;
 import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 
 import java.util.List;
@@ -46,6 +45,16 @@ public class ListPresenter implements ListContract.Presenter {
         view.initSearch(menu);
     }
 
+    @Override
+    public void setupHistory(Menu menu) {
+        view.initHistory(menu);
+    }
+
+    @Override
+    public void setupSignIn(Menu menu) {
+        view.initSignIn(menu);
+    }
+
 
     public void loadFirstPage(String searchKeyword) {
         this.searchKeyword = searchKeyword;
@@ -73,6 +82,11 @@ public class ListPresenter implements ListContract.Presenter {
         List<BooksVolume> volumes = getBooksFromDB();
         view.clearAdapter();
         retrofitListener.onList(volumes);
+    }
+
+    @Override
+    public void onSignIn() {
+        view.openSignInActivity();
     }
 
 
