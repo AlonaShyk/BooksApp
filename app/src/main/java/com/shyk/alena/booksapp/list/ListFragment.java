@@ -34,7 +34,7 @@ import static android.content.Context.SEARCH_SERVICE;
 public class ListFragment extends Fragment implements RetrofitListener, ListContract.View {
 
     private OnListFragmentInteractionListener mListener;
-    private String KEYWORD_FOR_START = "software";
+    private final String KEYWORD_FOR_START = "software";
     private MyBooksListRecyclerViewAdapter adapter;
     private ListPresenter presenter;
     private RecyclerView recyclerView;

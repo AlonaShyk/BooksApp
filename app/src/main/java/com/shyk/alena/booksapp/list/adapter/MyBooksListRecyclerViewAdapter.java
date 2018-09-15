@@ -20,7 +20,7 @@ import java.util.List;
 public class MyBooksListRecyclerViewAdapter extends RecyclerView.Adapter<MyBooksListRecyclerViewAdapter.ViewHolder> {
 
     private List<BooksVolume> items;
-    private ListFragment.OnListFragmentInteractionListener mListener;
+    private final ListFragment.OnListFragmentInteractionListener mListener;
 
     public MyBooksListRecyclerViewAdapter(List<BooksVolume> items, ListFragment.OnListFragmentInteractionListener listener) {
         this.items = items;
@@ -67,7 +67,7 @@ public class MyBooksListRecyclerViewAdapter extends RecyclerView.Adapter<MyBooks
         return 0;
     }
 
-    public void add(BooksVolume booksVolume) {
+    private void add(BooksVolume booksVolume) {
         if (items == null) {
             items = new ArrayList<>();
         }
@@ -83,7 +83,7 @@ public class MyBooksListRecyclerViewAdapter extends RecyclerView.Adapter<MyBooks
         }
     }
 
-    public void remove(BooksVolume booksVolume) {
+    private void remove(BooksVolume booksVolume) {
         int position = items.indexOf(booksVolume);
         if (position > -1) {
             items.remove(position);
@@ -97,18 +97,18 @@ public class MyBooksListRecyclerViewAdapter extends RecyclerView.Adapter<MyBooks
         }
     }
 
-    public BooksVolume getItem(int position) {
+    private BooksVolume getItem(int position) {
         return items.get(position);
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView title;
-        public final ImageView bookImage;
-        public BooksVolume mItem;
+        final View mView;
+        final TextView title;
+        final ImageView bookImage;
+        BooksVolume mItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
             title = view.findViewById(R.id.title_tv);

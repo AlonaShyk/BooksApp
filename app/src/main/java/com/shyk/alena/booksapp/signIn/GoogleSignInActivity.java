@@ -60,12 +60,16 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleSig
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.sign_in_button) {
-            presenter.startActivity();
-        } else if (i == R.id.sign_out_button) {
-            presenter.signOut();
-        } else if (i == R.id.disconnect_button) {
-            presenter.revokeAccess();
+        switch (i) {
+            case R.id.sign_in_button:
+                presenter.startActivity();
+                break;
+            case R.id.sign_out_button:
+                presenter.signOut();
+                break;
+            case R.id.disconnect_button:
+                presenter.revokeAccess();
+                break;
         }
     }
 

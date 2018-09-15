@@ -12,7 +12,7 @@ import com.shyk.alena.booksapp.models.VolumeInfo;
 import java.util.ArrayList;
 
 public class LocalDataProvider {
-    private Context context;
+    private final Context context;
     private DBHelper dbHelper;
     private SQLiteDatabase database;
 

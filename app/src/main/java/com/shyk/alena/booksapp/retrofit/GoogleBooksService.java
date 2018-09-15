@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-public interface GoogleBooksService {
+interface GoogleBooksService {
 
     @GET("volumes/{volumes}")
     Call<BooksVolume> loadBook(@Path("volumes") String id,

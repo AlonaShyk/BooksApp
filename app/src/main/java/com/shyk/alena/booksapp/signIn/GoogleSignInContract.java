@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.shyk.alena.booksapp.base.BasePresenter;
 import com.shyk.alena.booksapp.base.BaseView;
 
-public class GoogleSignInContract {
+class GoogleSignInContract {
     interface Model {
     }
 

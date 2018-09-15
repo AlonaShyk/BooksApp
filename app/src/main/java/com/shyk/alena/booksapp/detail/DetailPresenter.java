@@ -10,8 +10,8 @@ import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 
 public class DetailPresenter implements DetailContract.Presenter {
     private DetailContract.View view;
-    private RetrofitListener listener;
-    private Context context;
+    private final RetrofitListener listener;
+    private final Context context;
     private LocalDataProvider localDataProvider;
 
     public DetailPresenter(Context context, DetailContract.View view, RetrofitListener listener) {

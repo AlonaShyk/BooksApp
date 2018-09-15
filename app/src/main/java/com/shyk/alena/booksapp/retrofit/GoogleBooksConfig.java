@@ -1,6 +1,6 @@
 package com.shyk.alena.booksapp.retrofit;
 
-public class GoogleBooksConfig {
+class GoogleBooksConfig {
     private static final String API_KEY = "AIzaSyAxoVmT-RNLvE0A8TFYX7p68vqTa_t8pPg";
 
     public GoogleBooksConfig() {

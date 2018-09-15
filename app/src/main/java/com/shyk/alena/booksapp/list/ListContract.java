@@ -8,7 +8,7 @@ import com.shyk.alena.booksapp.models.BooksVolume;
 
 import java.util.List;
 
-public class ListContract {
+class ListContract {
     interface Model {
     }
 

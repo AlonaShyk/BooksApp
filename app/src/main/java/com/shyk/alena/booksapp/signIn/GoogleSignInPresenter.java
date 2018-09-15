@@ -26,7 +26,7 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
     public static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
-    private Context context;
+    private final Context context;
 
     public GoogleSignInPresenter(Context context, GoogleSignInContract.View view) {
         this.context = context;

@@ -17,8 +17,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GoogleBooksRestClient {
     private static GoogleBooksRestClient instance;
-    static final String BASE_URL = "https://www.googleapis.com/books/v1/";
-    private GoogleBooksService googleBooksService;
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/";
+    private final GoogleBooksService googleBooksService;
 
     private GoogleBooksRestClient() {
         Gson gson = new GsonBuilder()

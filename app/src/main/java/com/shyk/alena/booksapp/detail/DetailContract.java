@@ -5,7 +5,7 @@ import com.shyk.alena.booksapp.base.BaseView;
 import com.shyk.alena.booksapp.models.BooksVolume;
 import com.shyk.alena.booksapp.models.VolumeInfo;
 
-public class DetailContract {
+class DetailContract {
     interface Model {
     }
 
