@@ -43,6 +43,9 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @Override
     public void showBook(VolumeInfo info) {
+        if (info.getAuthors() == null) {
+            info.setAuthor("");
+        }
         view.inflateDetail(info.getTitle(),
                 info.getAuthors().get(0),
                 info.getImageLinks().getThumbnail(),

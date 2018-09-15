@@ -6,6 +6,7 @@ import com.shyk.alena.booksapp.models.BooksVolume;
 import com.shyk.alena.booksapp.models.Items;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,9 +26,11 @@ public class GoogleBooksRestClient {
                 .setLenient()
                 .create();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(logging)
+                .connectTimeout(3, TimeUnit.MINUTES)
+                .readTimeout(3, TimeUnit.MINUTES);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

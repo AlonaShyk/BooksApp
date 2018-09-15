@@ -74,7 +74,9 @@ public class ListPresenter implements ListContract.Presenter {
     @Override
     public void onNextList(List<BooksVolume> items) {
         isLastPage = items.size() < MAX_RESULT;
-        view.addNextPage(items);
+        if (view != null) {
+            view.addNextPage(items);
+        }
     }
 
     @Override
