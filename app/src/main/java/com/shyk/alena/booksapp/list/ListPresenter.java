@@ -91,6 +91,13 @@ public class ListPresenter implements ListContract.Presenter {
         view.openSignInActivity();
     }
 
+    @Override
+    public void onResult(boolean visibility) {
+        if (view != null) {
+            view.setProgressVisibility(visibility);
+        }
+    }
+
 
     @Override
     public void destroy() {

@@ -60,6 +60,7 @@ public class GoogleBooksRestClient {
 
             @Override
             public void onFailure(Call<BooksVolume> call, Throwable t) {
+                callback.onError();
                 t.printStackTrace();
             }
         });

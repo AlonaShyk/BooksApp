@@ -19,9 +19,18 @@ class DBHelper  extends SQLiteOpenHelper {
     public static final String KEY_YEAR = "year";
     public static final String KEY_IMG = "image";
     public static final String KEY_DESCRIPTION = "description";
+    private static  DBHelper dbHelper;
 
-    public DBHelper(Context context) {
+    private DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static synchronized DBHelper getInstance(Context context) {
+
+        if (dbHelper == null) {
+            dbHelper = new DBHelper(context.getApplicationContext());
+        }
+        return dbHelper;
     }
 
     @Override

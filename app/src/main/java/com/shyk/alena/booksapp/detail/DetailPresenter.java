@@ -27,7 +27,13 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @Override
     public void destroy() {
+        localDataProvider.closeDB();
         view = null;
+    }
+
+    @Override
+    public void onResult(boolean visibility) {
+        view.setProgressVisibility(visibility);
     }
 
 

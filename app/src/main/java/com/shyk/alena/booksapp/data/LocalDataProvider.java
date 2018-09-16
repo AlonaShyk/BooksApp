@@ -21,7 +21,7 @@ public class LocalDataProvider {
     }
 
     public void setupDB() {
-        dbHelper = new DBHelper(context);
+        dbHelper = DBHelper.getInstance(context);
         database = dbHelper.getWritableDatabase();
     }
 
@@ -78,7 +78,7 @@ public class LocalDataProvider {
 
     public boolean isInDatabase(String bookId) {
         Cursor cursor = database.rawQuery(queryBookById(bookId), null);
-        if (cursor.getCount()>0) {
+        if (cursor.getCount() > 0) {
             cursor.close();
             return true;
         } else {
@@ -101,5 +101,9 @@ public class LocalDataProvider {
         dbHelper.close();
     }
 
+    public void closeDB() {
+        dbHelper.close();
+        database.close();
+    }
 
 }

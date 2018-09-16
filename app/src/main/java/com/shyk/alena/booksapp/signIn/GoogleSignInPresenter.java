@@ -39,6 +39,11 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
     }
 
     @Override
+    public void onResult(boolean visibility) {
+        view.setProgressVisibility(visibility);
+    }
+
+    @Override
     public void initializeAuth(String clientId) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(clientId)

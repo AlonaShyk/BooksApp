@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="4">
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="150dp"
+        android:visibility="gone"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"

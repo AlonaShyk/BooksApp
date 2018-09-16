@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.shyk.alena.booksapp.R;
 import com.shyk.alena.booksapp.detail.DetailFragment;
@@ -38,6 +39,7 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     private MyBooksListRecyclerViewAdapter adapter;
     private ListPresenter presenter;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
 
     public ListFragment() {
@@ -57,6 +59,7 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recycle_view);
         presenter = new ListPresenter(getContext(), this, this);
         presenter.create();
@@ -69,8 +72,8 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.options_menu, menu);
         presenter.setupSearch(menu);
-       presenter.setupHistory(menu);
-       presenter.setupSignIn(menu);
+        presenter.setupHistory(menu);
+        presenter.setupSignIn(menu);
 
     }
 
@@ -100,7 +103,13 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
 
     @Override
     public void onList(List<BooksVolume> items) {
+        presenter.onResult(false);
         presenter.onNextList(items);
+    }
+
+    @Override
+    public void onError() {
+        presenter.onResult(false);
     }
 
 
@@ -112,6 +121,7 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    presenter.onResult(true);
                     presenter.loadFirstPage(query);
                     return false;
                 }
@@ -194,6 +204,13 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
     public void openSignInActivity() {
         Intent intent = new Intent(getActivity(), GoogleSignInActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void setProgressVisibility(boolean visibility) {
+        if (visibility) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
     }
 
     @Override

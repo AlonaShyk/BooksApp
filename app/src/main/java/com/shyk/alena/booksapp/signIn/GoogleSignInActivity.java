@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -17,13 +18,14 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleSig
     private TextView status;
     private TextView detail;
     private GoogleSignInPresenter presenter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google_sign_in);
-        GoogleSignInContract.View view1 = this;
-        presenter = new GoogleSignInPresenter(getBaseContext(), view1);
+        progressBar=findViewById(R.id.progressBar);
+        presenter = new GoogleSignInPresenter(getBaseContext(), this);
         status = findViewById(R.id.status);
         detail = findViewById(R.id.detail);
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
@@ -60,6 +62,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleSig
     @Override
     public void onClick(View v) {
         int i = v.getId();
+        presenter.onResult(true);
         switch (i) {
             case R.id.sign_in_button:
                 presenter.startActivity();
@@ -80,6 +83,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleSig
 
     @Override
     public void updateUI(FirebaseUser user) {
+        presenter.onResult(false);
         if (user != null) {
             status.setText(getString(R.string.google_status_fmt, user.getEmail()));
             detail.setText(getString(R.string.firebase_status_fmt, user.getUid()));
@@ -99,4 +103,10 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleSig
     }
 
 
+    @Override
+    public void setProgressVisibility(boolean visibility) {
+        if (visibility) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
+    }
 }

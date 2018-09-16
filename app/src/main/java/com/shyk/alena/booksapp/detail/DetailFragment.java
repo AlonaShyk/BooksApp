@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shyk.alena.booksapp.R;
@@ -30,6 +31,7 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
     private TextView year;
     private TextView description;
     private ImageView bookImg;
+    private ProgressBar progressBar;
 
 
     public DetailFragment() {
@@ -57,6 +59,7 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
         if (getActivity() != null) {
             title = view.findViewById(R.id.title);
             author = view.findViewById(R.id.author);
@@ -78,6 +81,7 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
 
     @Override
     public void onBook(BooksVolume booksVolume) {
+        presenter.onResult(true);
         presenter.showBook(booksVolume.getVolumeInfo());
         presenter.addToDatabase(booksVolume);
 
@@ -86,6 +90,11 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
     @Override
     public void onList(List<BooksVolume> items) {
 
+    }
+
+    @Override
+    public void onError() {
+        presenter.onResult(false);
     }
 
 
@@ -113,4 +122,10 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
         description.setMovementMethod(new ScrollingMovementMethod());
     }
 
+    @Override
+    public void setProgressVisibility(boolean visibility) {
+        if (visibility) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else progressBar.setVisibility(View.GONE);
+    }
 }

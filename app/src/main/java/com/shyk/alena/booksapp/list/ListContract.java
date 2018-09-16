@@ -28,6 +28,7 @@ class ListContract {
         void openDetail(String id);
 
         void openSignInActivity();
+
     }
 
     interface Presenter extends BasePresenter<View> {
@@ -42,5 +43,6 @@ class ListContract {
         void loadBooksFromDB();
 
         void onSignIn();
+
     }
 }
