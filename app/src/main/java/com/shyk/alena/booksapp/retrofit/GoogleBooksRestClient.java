@@ -26,7 +26,7 @@ public class GoogleBooksRestClient {
                 .setLenient()
                 .create();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging)
                 .connectTimeout(3, TimeUnit.MINUTES)
