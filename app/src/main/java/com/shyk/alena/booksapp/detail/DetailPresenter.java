@@ -3,9 +3,9 @@ package com.shyk.alena.booksapp.detail;
 import android.content.Context;
 
 import com.shyk.alena.booksapp.data.LocalDataProvider;
+import com.shyk.alena.booksapp.data.RemoteDataProvider;
 import com.shyk.alena.booksapp.models.BooksVolume;
 import com.shyk.alena.booksapp.models.VolumeInfo;
-import com.shyk.alena.booksapp.retrofit.GoogleBooksRestClient;
 import com.shyk.alena.booksapp.retrofit.RetrofitListener;
 
 public class DetailPresenter implements DetailContract.Presenter {
@@ -37,14 +37,13 @@ public class DetailPresenter implements DetailContract.Presenter {
     }
 
 
-    @Override
-    public void loadBook(String id) {
-        GoogleBooksRestClient.getInstance().getBook(id, listener);
+    private void loadBook(String id) {
+        RemoteDataProvider.loadBook(id, listener);
     }
 
-    @Override
-    public void getBookFromDB(String id) {
-       showBook(localDataProvider.getBooksFromDB(id).get(0).getVolumeInfo());
+
+    private void getBookFromDB(String id) {
+        showBook(localDataProvider.getBooksFromDB(id).get(0).getVolumeInfo());
     }
 
     @Override
@@ -62,13 +61,22 @@ public class DetailPresenter implements DetailContract.Presenter {
         );
     }
 
-    @Override
-    public boolean isInDatabase(String bookId) {
-       return localDataProvider.isInDatabase(bookId);
+
+    private boolean isInDatabase(String bookId) {
+        return localDataProvider.isInDatabase(bookId);
     }
 
     @Override
     public void addToDatabase(BooksVolume booksVolume) {
-       localDataProvider.addToDatabase(booksVolume);
+        localDataProvider.addToDatabase(booksVolume);
+    }
+
+    @Override
+    public void getBook(String bookId) {
+        if (!isInDatabase(bookId)) {
+            loadBook(bookId);
+        } else {
+            getBookFromDB(bookId);
+        }
     }
 }

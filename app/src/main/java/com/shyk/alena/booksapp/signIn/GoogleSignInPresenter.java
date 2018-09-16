@@ -24,8 +24,8 @@ import static com.shyk.alena.booksapp.signIn.GoogleSignInActivity.TAG;
 public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
     private GoogleSignInContract.View view;
     public static final int RC_SIGN_IN = 9001;
-    private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth firebaseAuth;
+    private GoogleSignInClient googleSignInClient;
     private final Context context;
 
     public GoogleSignInPresenter(Context context, GoogleSignInContract.View view) {
@@ -49,8 +49,8 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
                 .requestIdToken(clientId)
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
-        mAuth = FirebaseAuth.getInstance();
+        googleSignInClient = GoogleSignIn.getClient(context, gso);
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -66,12 +66,12 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential)
+        firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
                             view.updateUI(user);
                         } else {
                             view.authFailed();
@@ -83,14 +83,14 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
 
     @Override
     public void startActivity() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = googleSignInClient.getSignInIntent();
         view.startActivityForResult(signInIntent);
     }
 
     @Override
     public void signOut() {
-        mAuth.signOut();
-        mGoogleSignInClient.signOut().addOnCompleteListener(
+        firebaseAuth.signOut();
+        googleSignInClient.signOut().addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -101,8 +101,8 @@ public class GoogleSignInPresenter implements GoogleSignInContract.Presenter {
 
     @Override
     public void revokeAccess() {
-        mAuth.signOut();
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(
+        firebaseAuth.signOut();
+        googleSignInClient.revokeAccess().addOnCompleteListener(
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

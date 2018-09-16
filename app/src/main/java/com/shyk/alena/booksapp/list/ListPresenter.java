@@ -19,7 +19,6 @@ public class ListPresenter implements ListContract.Presenter {
     private boolean isLastPage = false;
     private int startIndex = PAGE_START;
     private final RetrofitListener retrofitListener;
-    private final RemoteDataProvider remoteDataProvider = new RemoteDataProvider();
     private LocalDataProvider localDataProvider;
     private final Context context;
 
@@ -59,12 +58,12 @@ public class ListPresenter implements ListContract.Presenter {
     public void loadFirstPage(String searchKeyword) {
         this.searchKeyword = searchKeyword;
         view.clearAdapter();
-        remoteDataProvider.loadList(searchKeyword, retrofitListener, "0");
+        RemoteDataProvider.loadList(searchKeyword, retrofitListener, "0");
     }
 
     public void loadNextPage() {
         startIndex += MAX_RESULT + 1;
-        remoteDataProvider.loadList(searchKeyword, retrofitListener, String.valueOf(startIndex));
+        RemoteDataProvider.loadList(searchKeyword, retrofitListener, String.valueOf(startIndex));
     }
 
     private List<BooksVolume> getBooksFromDB() {

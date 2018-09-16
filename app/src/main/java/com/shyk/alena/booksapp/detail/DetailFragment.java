@@ -69,19 +69,14 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
             year = view.findViewById(R.id.year);
             description = view.findViewById(R.id.description);
         }
-        if (!presenter.isInDatabase(bookId)) {
-            presenter.loadBook(bookId);
-        } else {
-            presenter.getBookFromDB(bookId);
-        }
-
+      presenter.getBook(bookId);
         return view;
     }
 
 
     @Override
     public void onBook(BooksVolume booksVolume) {
-        presenter.onResult(true);
+        presenter.onResult(false);
         presenter.showBook(booksVolume.getVolumeInfo());
         presenter.addToDatabase(booksVolume);
 

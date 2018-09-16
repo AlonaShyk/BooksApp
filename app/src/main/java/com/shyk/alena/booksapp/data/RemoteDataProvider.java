@@ -8,11 +8,11 @@ import static com.shyk.alena.booksapp.utils.Constants.MAX_RESULT;
 public class RemoteDataProvider {
 
 
-    public void loadBook(String id, RetrofitListener listener) {
+    public static void loadBook(String id, RetrofitListener listener) {
         GoogleBooksRestClient.getInstance().getBook(id, listener);
     }
 
-    public void loadList(String searchKeyword, RetrofitListener retrofitListener, String startIndex) {
+    public static void loadList(String searchKeyword, RetrofitListener retrofitListener, String startIndex) {
         GoogleBooksRestClient.getInstance().getBookList(searchKeyword, retrofitListener, startIndex, String.valueOf(MAX_RESULT));
     }
 }

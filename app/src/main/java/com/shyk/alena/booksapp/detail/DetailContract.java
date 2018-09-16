@@ -20,10 +20,11 @@ class DetailContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void loadBook(String id);
-        void getBookFromDB(String id);
+
         void showBook(VolumeInfo info);
-        boolean isInDatabase(String bookId);
+
         void addToDatabase(BooksVolume booksVolume);
+
+        void getBook(String bookId);
     }
 }
