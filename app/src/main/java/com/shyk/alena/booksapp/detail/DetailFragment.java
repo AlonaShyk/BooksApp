@@ -123,4 +123,10 @@ public class DetailFragment extends Fragment implements RetrofitListener, Detail
             progressBar.setVisibility(View.VISIBLE);
         } else progressBar.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onDestroyView() {
+        presenter.destroy();
+        super.onDestroyView();
+    }
 }

@@ -1,9 +1,9 @@
 package com.shyk.alena.booksapp.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 import com.shyk.alena.booksapp.models.BooksVolume;
 import com.shyk.alena.booksapp.models.ImageLinks;
@@ -87,17 +87,35 @@ public class LocalDataProvider {
         }
     }
 
-    public void addToDatabase(BooksVolume booksVolume) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(DBHelper.KEY_BOOK_ID, booksVolume.getId());
-        contentValues.put(DBHelper.KEY_TITLE, booksVolume.getVolumeInfo().getTitle());
-        contentValues.put(DBHelper.KEY_AUTHOR, booksVolume.getVolumeInfo().getAuthors().get(0));
-        contentValues.put(DBHelper.KEY_NUMBER_OF_PAGES, booksVolume.getVolumeInfo().getPageCount());
-        contentValues.put(DBHelper.KEY_PUBLISHER, booksVolume.getVolumeInfo().getPublisher());
-        contentValues.put(DBHelper.KEY_YEAR, booksVolume.getVolumeInfo().getPublishedDate());
-        contentValues.put(DBHelper.KEY_IMG, booksVolume.getVolumeInfo().getImageLinks().getThumbnail());
-        contentValues.put(DBHelper.KEY_DESCRIPTION, booksVolume.getVolumeInfo().getDescription());
-        database.insert(DBHelper.TABLE_BOOKS, null, contentValues);
+    public void addToDatabase(final BooksVolume booksVolume) {
+        String sqlInsert = "insert into " + DBHelper.TABLE_BOOKS + " ("
+                + DBHelper.KEY_BOOK_ID
+                + ", " + DBHelper.KEY_TITLE
+                + ", " + DBHelper.KEY_AUTHOR
+                + ", " + DBHelper.KEY_NUMBER_OF_PAGES
+                + ", " + DBHelper.KEY_PUBLISHER
+                + ", " + DBHelper.KEY_YEAR
+                + ", " + DBHelper.KEY_IMG
+                + ", " + DBHelper.KEY_DESCRIPTION
+                + ")" + " values( ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        database.beginTransaction();
+        SQLiteStatement stmt = database.compileStatement(sqlInsert);
+        stmt.bindString(1, booksVolume.getId());
+        stmt.bindString(2, booksVolume.getVolumeInfo().getTitle());
+        stmt.bindString(3, booksVolume.getVolumeInfo().getAuthors().get(0));
+        stmt.bindLong(4, booksVolume.getVolumeInfo().getPageCount());
+        stmt.bindString(5, booksVolume.getVolumeInfo().getPublisher());
+        stmt.bindString(6, booksVolume.getVolumeInfo().getPublishedDate());
+        stmt.bindString(7, booksVolume.getVolumeInfo().getImageLinks().getThumbnail());
+        String description = booksVolume.getVolumeInfo().getDescription();
+        if (description == null) {
+            stmt.bindString(8, "");
+        } else stmt.bindString(8, description);
+        stmt.executeInsert();
+        stmt.clearBindings();
+        database.setTransactionSuccessful();
+        database.endTransaction();
         dbHelper.close();
     }
 

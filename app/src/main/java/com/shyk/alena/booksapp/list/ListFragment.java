@@ -215,8 +215,8 @@ public class ListFragment extends Fragment implements RetrofitListener, ListCont
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         presenter.destroy();
+        super.onDestroyView();
     }
 
     public interface OnListFragmentInteractionListener {
